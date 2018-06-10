@@ -1,0 +1,13 @@
+*.pyc
+.DS_Store
+*.pid
+staticfiles
+mediafiles
+media
+.log
+.idea
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
