@@ -1,0 +1,1 @@
+web: gunicorn suli.wsgi --log-file -
