@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'project',
     'material',
     'customer',
+    'evaluation',
 ]
 
 MIDDLEWARE_CLASSES = [
