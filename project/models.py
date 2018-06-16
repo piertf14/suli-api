@@ -8,6 +8,10 @@ class StatusProject(models.Model):
     description = models.CharField(
         max_length=100
     )
+    slug = models.CharField(
+        max_length=100,
+        null=True
+    )
 
 
 class Project(models.Model):
