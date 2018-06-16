@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 
 from company.urls import urls_patterns as company_urls
 from customer.urls import urls_patterns as customer_urls
@@ -25,3 +27,4 @@ urlpatterns = [
     url(r'^', include(company_urls, namespace='company_app')),
     url(r'^', include(customer_urls, namespace='customer_app')),
 ]
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
