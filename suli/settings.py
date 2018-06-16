@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'company',
     'project',
     'material',
+    'customer',
 ]
 
 MIDDLEWARE_CLASSES = [
