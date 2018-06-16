@@ -16,8 +16,12 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from company.urls import urls_patterns as company_urls
+from customer.urls import urls_patterns as customer_urls
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-
+    url(r'^', include(company_urls, namespace='company_app')),
+    url(r'^', include(customer_urls, namespace='customer_app')),
 ]

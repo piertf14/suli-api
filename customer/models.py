@@ -9,8 +9,9 @@ class UserConsulting(models.Model):
     consulting_company = models.ForeignKey(
         'company.ConsultingCompany'
     )
-    user = models.ForeignKey(
-        User
+    user = models.OneToOneField(
+        User,
+        related_name='user_consulting'
     )
     position = models.CharField(
         max_length=100
