@@ -22,6 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'jvl5fct5c@z%m-*!ra8u&b5ixt(n13xo0b-+%*+kc9j*+5y9p3'
 
+ADMINS = ((u'Piero Terreros', 'piero.terreros@gmail.com'),)
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -37,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'oauth2_provider',
+    'rest_framework',
     'company',
     'project',
     'material',
@@ -126,3 +131,13 @@ STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = 'mediafiles'
+
+OAUTH2_PROVIDER = {
+    # this is the list of available scopes
+    'SCOPES': {
+        'read': 'Read scope',
+        'write': 'Write scope',
+        'groups': 'Access to your groups',
+         },
+    # 'ACCESS_TOKEN_EXPIRE_SECONDS':  31536007,
+}
