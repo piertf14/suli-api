@@ -6,7 +6,7 @@ from rest_framework import permissions
 from oauth2_provider.contrib.rest_framework import TokenHasScope
 
 from core.utils import get_access_token
-from .models import Agent, ReferentialImage
+from .models import Agent, ReferentialImage, MeasurementValue
 from .serializers import AgentSerializer, ChainCustodySerializer, ChainCustodyRegisterSerializer, \
     MeasurementValueSerializers, ReferentialImageSerializers
 
@@ -66,15 +66,13 @@ class ReferentialImageAPI(APIView):
     required_scopes = ['read', 'write']
 
     def post(self, request, format=None):
-        files = request.data['images']
-        list_referential_image =[]
         try:
-            for file in files:
-                referential_image = ReferentialImage(image=file)
-                referential_image.save()
-                list_referential_image.append(referential_image)
+            measurement_value = MeasurementValue.objects.get(pk=request.data['measurement_value'])
+            referential_image = ReferentialImage(image=request.data['images'],
+                                                 measurement_value=measurement_value)
+            referential_image.save()
 
-            serializer = ReferentialImageSerializers(list_referential_image, many=True)
+            serializer = ReferentialImageSerializers(referential_image, many=False)
             return Response(serializer.data)
         except Exception as e:
             return Response({'message': e.message}, status=400)
