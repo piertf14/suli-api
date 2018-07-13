@@ -15,6 +15,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     status = StatusProjectSerializer()
     customer = CustomerSerializer()
     mining_units = serializers.SerializerMethodField()
+    detail_project_id = serializers.SerializerMethodField()
 
     def get_mining_units(self, obj):
         mining_units = [project_detail.mining_init for project_detail in obj.project_detail_project.all()]
@@ -23,6 +24,12 @@ class ProjectSerializer(serializers.ModelSerializer):
                 'detail_project':  obj.project_detail_project.first().pk})
             return serializer.data
         return None
+
+    def get_detail_project_id(self, obj):
+        try:
+            return obj.project_detail_project.first().pk
+        except:
+            return None
 
     class Meta:
         model = Project
