@@ -1,13 +1,26 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import uuid
+import os
+from time import gmtime, strftime
 
 from django.db import models
+
+
+def get_file_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = "%s.%s" % (str(uuid.uuid4()).replace('-', ''), ext)
+    path = strftime("evaluation/%Y/%m/%d", gmtime())
+    return os.path.join(path, filename)
 
 
 class Agent(models.Model):
     name = models.CharField(
         max_length=100
     )
+
+    def __unicode__(self):
+        return self.name
 
 
 class Norma(models.Model):
@@ -16,10 +29,14 @@ class Norma(models.Model):
         default=True
     )
 
+    def __unicode__(self):
+        return self.description
+
 
 class Category(models.Model):
     norma = models.ForeignKey(
-        Norma
+        Norma,
+        related_name='norma_category'
     )
     description = models.CharField(
         max_length=200
@@ -32,40 +49,54 @@ class Category(models.Model):
         decimal_places=2
     )
 
+    def __unicode__(self):
+        return '%s - %s' % (self.description, self.norma)
+
 
 class AgentCategory(models.Model):
     agent = models.ForeignKey(
-        Agent
+        Agent,
+        related_name='agent_agent_category'
     )
     category = models.ForeignKey(
-        Category
+        Category,
+        related_name='category_agent_category'
     )
+
+    def __unicode__(self):
+        return '%s - %s' % (self.agent, self.category)
 
 
 class ChainCustody(models.Model):
     user = models.ForeignKey(
-        'customer.UserConsulting'
+        'customer.UserConsulting',
+        related_name='user_chain_custody'
     )
-    project = models.ForeignKey(
-        'project.Project'
+    detail_project = models.ForeignKey(
+        'project.DetailProject',
+        related_name='project_chain_custody'
     )
     mining_unit = models.ForeignKey(
-        'company.MiningUnit'
+        'company.MiningUnit',
+        related_name='mining_unit_chain_custody'
     )
-    area = models.ForeignKey(
-        'project.DetailProject'
+    area = models.CharField(
+        max_length=100
     )
     agent = models.ForeignKey(
-        Agent
+        Agent,
+        related_name='agent_chain_custody'
     )
     instrument = models.ForeignKey(
-        'material.Instrument'
+        'material.Instrument',
+        related_name='instrument_chain_custody'
     )
 
     date_evaluation = models.DateField()
     description_activity = models.TextField()
     instrument = models.ForeignKey(
-        'material.Instrument'
+        'material.Instrument',
+        related_name='instrument_chain_custody'
     )
     start_hour = models.IntegerField()
     end_hour = models.IntegerField()
@@ -73,7 +104,10 @@ class ChainCustody(models.Model):
 
 
 class ContributorEvaluated(models.Model):
-    evaluation = models.ForeignKey(ChainCustody)
+    evaluation = models.ForeignKey(
+        ChainCustody,
+        related_name='evaluation_chain_custody'
+    )
     contributor_name = models.CharField(
         max_length=150
     )
@@ -84,10 +118,14 @@ class ContributorEvaluated(models.Model):
         max_length=150
     )
 
+    def __unicode__(self):
+        return '%s - %s' % (self.contributor_name, self.contributor_last_name)
+
 
 class MeasurementValue(models.Model):
     chain_custody = models.ForeignKey(
-        ChainCustody
+        ChainCustody,
+        related_name='chain_custody_measurement_value'
     )
     max = models.IntegerField()
     min = models.IntegerField()
@@ -103,14 +141,19 @@ class MeasurementValue(models.Model):
         max_length=250
     )
 
+    def __unicode__(self):
+        return '%s - %s' % (self.max, self.min)
+
 
 class ReferentialImage(models.Model):
     chain_custody = models.ForeignKey(
-        ChainCustody
+        ChainCustody,
+        related_name='chain_custody_referential_image'
     )
     measurement_value = models.ForeignKey(
-        MeasurementValue
+        MeasurementValue,
+        related_name='measurement_value_referential_image'
     )
-    image = models.FileField()
+    image = models.FileField(upload_to=get_file_path)
     longitude = models.IntegerField()
     latitude = models.IntegerField()

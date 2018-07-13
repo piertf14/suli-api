@@ -2,24 +2,24 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import Customer, UserConsulting
-from company.serializers import ConsultingCompanySerializers
+from company.serializers import ConsultingCompanySerializer
 
 
-class UserSerializers(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email']
 
 
-class CustomerSerializers(serializers.ModelSerializer):
+class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
         fields = '__all__'
 
 
-class UserConsultingSerializers(serializers.ModelSerializer):
-    user = UserSerializers()
-    consulting_company = ConsultingCompanySerializers()
+class UserConsultingSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    consulting_company = ConsultingCompanySerializer()
 
     class Meta:
         model = UserConsulting

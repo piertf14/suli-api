@@ -8,39 +8,45 @@ from .models import Agent, Norma, Category, AgentCategory, ChainCustody,\
 
 @admin.register(Agent)
 class AgentAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', )
+    search_fields = ('name', )
 
 
 @admin.register(Norma)
 class NormaAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('description', 'is_active')
+    search_fields = ('description', )
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('norma', 'description', 'limit_description', 'limit_value', )
+    search_fields = ('norma__description', 'description', )
 
 
 @admin.register(AgentCategory)
 class AgentCategoryAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('agent', 'category', )
+    search_fields = ('agent__name', 'category__description', )
 
 
 @admin.register(ChainCustody)
 class ChainCustodyAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('user', 'detail_project', 'agent',)
+    search_fields = ('user__name',)
 
 
 @admin.register(ContributorEvaluated)
 class ContributorEvaluatedAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('evaluation', 'contributor_name', 'contributor_last_name', 'job_position', )
+    search_fields = ('contributor_name', 'job_position', )
 
 
 @admin.register(MeasurementValue)
 class MeasurementValueAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('chain_custody', 'max', 'min', 'point_reference', )
 
 
 @admin.register(ReferentialImage)
 class ReferentialImageAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('chain_custody', 'measurement_value', 'longitude', 'latitude')

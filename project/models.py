@@ -13,13 +13,18 @@ class StatusProject(models.Model):
         null=True
     )
 
+    def __unicode__(self):
+        return self.description
+
 
 class Project(models.Model):
     consulting_company = models.ForeignKey(
-        'company.ConsultingCompany'
+        'company.ConsultingCompany',
+        related_name='consulting_company_project'
     )
     customer = models.ForeignKey(
-        'customer.Customer'
+        'customer.Customer',
+        related_name='customer_project'
     )
     observations = models.TextField()
     start_date = models.DateField(
@@ -35,16 +40,22 @@ class Project(models.Model):
         null=True
     )
 
+    def __unicode__(self):
+        return '%s - %s' % (self.customer, self.consulting_company)
+
 
 class DetailProject(models.Model):
     project = models.ForeignKey(
-        Project
+        Project,
+        related_name='project_detail_project'
     )
     mining_init = models.ForeignKey(
-        'company.MiningUnit'
+        'company.MiningUnit',
+        related_name='mining_init_detail_project'
     )
     agent_category = models.ForeignKey(
-        'evaluation.AgentCategory'
+        'evaluation.AgentCategory',
+        related_name='agent_category_detail_project'
     )
     quantity = models.PositiveIntegerField()
     code_area = models.CharField(

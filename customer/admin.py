@@ -7,9 +7,11 @@ from .models import UserConsulting, Customer
 
 @admin.register(UserConsulting)
 class UserConsultingAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('consulting_company', 'user', 'position', )
+    search_fields = ('user__username', 'consulting_company__name', )
 
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('consulting_company', 'number_ruc', 'name', 'number_telephone',)
+    search_fields = ('consulting_company__name', 'name', )

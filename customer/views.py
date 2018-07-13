@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import permissions
 from oauth2_provider.contrib.rest_framework import TokenHasScope
 from core.utils import get_access_token
-from .serializers import UserConsultingSerializers
+from .serializers import UserConsultingSerializer
 
 
 class MyUserAPI(APIView):
@@ -17,5 +17,5 @@ class MyUserAPI(APIView):
             user = get_access_token(request).user.user_consulting
         except:
             user = None
-        serializers = UserConsultingSerializers(user, many=False)
-        return Response(serializers.data)
+        serializer = UserConsultingSerializer(user, many=False)
+        return Response(serializer.data)
