@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'material',
     'customer',
     'evaluation',
+    'storages',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -122,16 +123,23 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
-STATIC_ROOT = 'staticfiles'
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID', '')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
+AWS_STORAGE_BUCKET_NAME = 'suli-api'
+AWS_QUERYSTRING_AUTH = False
+
+STATIC_ROOT = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), ]
 STATIC_URL = '/static/'
-
 MEDIA_ROOT = 'mediafiles'
 
+S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+MEDIA_URL = S3_URL
+
+
 OAUTH2_PROVIDER = {
-    # this is the list of available scopes
     'SCOPES': {
         'read': 'Read scope',
         'write': 'Write scope',

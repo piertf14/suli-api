@@ -25,11 +25,18 @@ class ConsultingCompany(models.Model):
         max_length=150
     )
 
+    def __unicode__(self):
+        return '%s - %s' % (self.number_ruc, self.name)
+
 
 class MiningUnit(models.Model):
     customer = models.ForeignKey(
-        'customer.Customer'
+        'customer.Customer',
+        related_name='customer_mining_unit'
     )
     name = models.CharField(
         max_length=150
     )
+
+    def __unicode__(self):
+        return self.name

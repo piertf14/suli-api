@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import url
-# from .views import
-#
-# urls_patterns = [
-#     url(r'^project/$', registrar_usuario),
-#
-# ]
+from .views import ListProjectsAPI
+
+urls_patterns = [
+    url(r'^project/$', ListProjectsAPI.as_view(), name='projects'),
+]

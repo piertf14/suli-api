@@ -19,10 +19,14 @@ class Instrument(models.Model):
     )
     code_certification = models.PositiveIntegerField()
 
+    def __unicode__(self):
+        return self.name
+
 
 class InstrumentCertificate(models.Model):
     instrument = models.ForeignKey(
-        Instrument
+        Instrument,
+        related_name='instrument_instrument_certificate'
     )
     certificate_calibration = models.PositiveIntegerField()
     due_calibration = models.DateField()

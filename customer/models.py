@@ -17,6 +17,9 @@ class UserConsulting(models.Model):
         max_length=100
     )
 
+    def __unicode__(self):
+        return '%s - %s' % (self.user, self.consulting_company)
+
 
 class Customer(models.Model):
     consulting_company = models.ForeignKey(
@@ -31,3 +34,6 @@ class Customer(models.Model):
     number_telephone = models.CharField(
         max_length=9
     )
+
+    def __unicode__(self):
+        return '%s - %s' % (self.name, self.consulting_company)

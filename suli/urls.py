@@ -18,13 +18,14 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 
-from company.urls import urls_patterns as company_urls
+from project.urls import urls_patterns as project_urls
 from customer.urls import urls_patterns as customer_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-    url(r'^', include(company_urls, namespace='company_app')),
+    url(r'^', include(project_urls, namespace='project_app')),
     url(r'^', include(customer_urls, namespace='customer_app')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
