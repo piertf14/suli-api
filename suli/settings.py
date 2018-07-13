@@ -130,7 +130,7 @@ AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
 AWS_STORAGE_BUCKET_NAME = 'suli-api'
 AWS_QUERYSTRING_AUTH = False
 
-STATIC_ROOT = '/static/'
+STATIC_ROOT = 'staticfiles'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), ]
 STATIC_URL = '/static/'
 MEDIA_ROOT = 'mediafiles'

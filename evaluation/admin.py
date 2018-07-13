@@ -2,8 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from .models import Agent, Norma, Category, AgentCategory, ChainCustody,\
-    ContributorEvaluated, MeasurementValue, ReferentialImage
+from .models import Agent, Norma, Category, AgentCategory, ChainCustody, MeasurementValue, ReferentialImage
 
 
 @admin.register(Agent)
@@ -36,12 +35,6 @@ class ChainCustodyAdmin(admin.ModelAdmin):
     search_fields = ('user__name',)
 
 
-@admin.register(ContributorEvaluated)
-class ContributorEvaluatedAdmin(admin.ModelAdmin):
-    list_display = ('evaluation', 'contributor_name', 'contributor_last_name', 'job_position', )
-    search_fields = ('contributor_name', 'job_position', )
-
-
 @admin.register(MeasurementValue)
 class MeasurementValueAdmin(admin.ModelAdmin):
     list_display = ('chain_custody', 'max', 'min', 'point_reference', )
@@ -49,4 +42,4 @@ class MeasurementValueAdmin(admin.ModelAdmin):
 
 @admin.register(ReferentialImage)
 class ReferentialImageAdmin(admin.ModelAdmin):
-    list_display = ('chain_custody', 'measurement_value', 'longitude', 'latitude')
+    list_display = ('measurement_value', 'longitude', 'latitude')

@@ -20,12 +20,16 @@ from django.conf.urls.static import static
 
 from project.urls import urls_patterns as project_urls
 from customer.urls import urls_patterns as customer_urls
+from evaluation.urls import urls_patterns as evaluation_urls
+from material.urls import urls_patterns as material_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'^', include(project_urls, namespace='project_app')),
     url(r'^', include(customer_urls, namespace='customer_app')),
+    url(r'^', include(evaluation_urls, namespace='evaluation_app')),
+    url(r'^', include(material_urls, namespace='material_app')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

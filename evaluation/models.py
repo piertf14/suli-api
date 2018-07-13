@@ -72,13 +72,18 @@ class ChainCustody(models.Model):
         'customer.UserConsulting',
         related_name='user_chain_custody'
     )
+    contributor_name = models.CharField(
+        max_length=150
+    )
+    contributor_last_name = models.CharField(
+        max_length=120
+    )
+    job_position = models.CharField(
+        max_length=150
+    )
     detail_project = models.ForeignKey(
         'project.DetailProject',
         related_name='project_chain_custody'
-    )
-    mining_unit = models.ForeignKey(
-        'company.MiningUnit',
-        related_name='mining_unit_chain_custody'
     )
     area = models.CharField(
         max_length=100
@@ -91,35 +96,11 @@ class ChainCustody(models.Model):
         'material.Instrument',
         related_name='instrument_chain_custody'
     )
-
     date_evaluation = models.DateField()
     description_activity = models.TextField()
-    instrument = models.ForeignKey(
-        'material.Instrument',
-        related_name='instrument_chain_custody'
-    )
     start_hour = models.IntegerField()
     end_hour = models.IntegerField()
     is_office_work = models.BooleanField(default=True)
-
-
-class ContributorEvaluated(models.Model):
-    evaluation = models.ForeignKey(
-        ChainCustody,
-        related_name='evaluation_chain_custody'
-    )
-    contributor_name = models.CharField(
-        max_length=150
-    )
-    contributor_last_name = models.CharField(
-        max_length=120
-    )
-    job_position = models.CharField(
-        max_length=150
-    )
-
-    def __unicode__(self):
-        return '%s - %s' % (self.contributor_name, self.contributor_last_name)
 
 
 class MeasurementValue(models.Model):
@@ -129,10 +110,7 @@ class MeasurementValue(models.Model):
     )
     max = models.IntegerField()
     min = models.IntegerField()
-    avg = models.DecimalField(
-        decimal_places=2,
-        max_digits=10
-    )
+    avg = models.IntegerField()
     point_reference = models.CharField(
         max_length=100
     )
@@ -146,14 +124,16 @@ class MeasurementValue(models.Model):
 
 
 class ReferentialImage(models.Model):
-    chain_custody = models.ForeignKey(
-        ChainCustody,
-        related_name='chain_custody_referential_image'
-    )
     measurement_value = models.ForeignKey(
         MeasurementValue,
         related_name='measurement_value_referential_image'
     )
     image = models.FileField(upload_to=get_file_path)
-    longitude = models.IntegerField()
-    latitude = models.IntegerField()
+    longitude = models.CharField(
+        null=True,
+        max_length=20
+    )
+    latitude = models.CharField(
+        null=True,
+        max_length=20
+    )
