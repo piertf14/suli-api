@@ -123,7 +123,7 @@ class MeasurementValue(models.Model):
     )
 
     def __unicode__(self):
-        return '%s - %s' % (self.max, self.min)
+        return '%s - %s - %s' % (self.point_reference, self.max, self.min)
 
 
 class ReferentialImage(models.Model):
