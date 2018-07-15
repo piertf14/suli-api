@@ -23,13 +23,13 @@ class ProjectSerializer(serializers.ModelSerializer):
             serializer = MiningUnitSerializer(mining_units, many=True, context={
                 'detail_project':  obj.project_detail_project.first().pk})
             return serializer.data
-        return None
+        return []
 
     def get_detail_project_id(self, obj):
         try:
             return obj.project_detail_project.first().pk
         except:
-            return None
+            return []
 
     class Meta:
         model = Project

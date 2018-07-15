@@ -131,8 +131,8 @@ AWS_STORAGE_BUCKET_NAME = 'suli-api'
 AWS_QUERYSTRING_AUTH = False
 
 STATIC_ROOT = 'staticfiles'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), ]
 STATIC_URL = '/static/'
+
 MEDIA_ROOT = 'mediafiles'
 
 S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
