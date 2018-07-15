@@ -8,7 +8,8 @@ from oauth2_provider.contrib.rest_framework import TokenHasScope
 from core.utils import get_access_token
 from .models import Agent, ReferentialImage, MeasurementValue
 from .serializers import AgentSerializer, ChainCustodySerializer, ChainCustodyRegisterSerializer, \
-    MeasurementValueSerializers, ReferentialImageSerializers
+    MeasurementValueSerializers, ReferentialImageSerializers, measurement_value_parse_data, \
+    MeasurementValueV2Serializers
 
 
 class AgentAPI(APIView):
@@ -73,6 +74,29 @@ class ReferentialImageAPI(APIView):
             referential_image.save()
 
             serializer = ReferentialImageSerializers(referential_image, many=False)
+            return Response(serializer.data)
+        except Exception as e:
+            return Response({'message': e.message}, status=400)
+
+
+class MeasurementValueV2API(APIView):
+    permission_classes = [permissions.IsAuthenticated, TokenHasScope]
+    required_scopes = ['read', 'write']
+
+    def post(self, request, format=None):
+        try:
+            measurement_value_data = measurement_value_parse_data(request)
+
+            serializer = MeasurementValueSerializers(data=measurement_value_data)
+            if not serializer.is_valid():
+                return Response(serializer.errors, status=400)
+            measurement_value = serializer.save()
+
+            referential_image = ReferentialImage(image=request.data['images'],
+                                                 measurement_value=measurement_value)
+            referential_image.save()
+
+            serializer = MeasurementValueV2Serializers(measurement_value, many=False)
             return Response(serializer.data)
         except Exception as e:
             return Response({'message': e.message}, status=400)
