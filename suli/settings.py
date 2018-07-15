@@ -145,7 +145,7 @@ OAUTH2_PROVIDER = {
         'write': 'Write scope',
         'groups': 'Access to your groups',
          },
-    # 'ACCESS_TOKEN_EXPIRE_SECONDS':  31536007,
+    'ACCESS_TOKEN_EXPIRE_SECONDS':  604800,
 }
 
 REST_FRAMEWORK = {
