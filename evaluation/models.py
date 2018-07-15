@@ -102,6 +102,9 @@ class ChainCustody(models.Model):
     end_hour = models.IntegerField()
     is_office_work = models.BooleanField(default=True)
 
+    def __unicode__(self):
+        return '%s - %s' % (self.contributor_name, self.date_evaluation)
+
 
 class MeasurementValue(models.Model):
     chain_custody = models.ForeignKey(
